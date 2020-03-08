@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.RuleMapper" >
+  <resultMap id="BaseResultMap" type="entity.Rule" >
+    <id column="RULE_ID" property="ruleId" jdbcType="DECIMAL" />
+    <result column="CATALOG_ID" property="catalogId" jdbcType="DECIMAL" />
+    <result column="RULE_CODE" property="ruleCode" jdbcType="VARCHAR" />
+    <result column="RULE_NAME" property="ruleName" jdbcType="VARCHAR" />
+    <result column="RULE_TYPE" property="ruleType" jdbcType="VARCHAR" />
+    <result column="CONTENT1" property="content1" jdbcType="VARCHAR" />
+    <result column="CONTENT3" property="content3" jdbcType="VARCHAR" />
+    <result column="CONTENT2" property="content2" jdbcType="VARCHAR" />
+    <result column="RULE_DESC1" property="ruleDesc1" jdbcType="VARCHAR" />
+    <result column="RULE_DESC2" property="ruleDesc2" jdbcType="VARCHAR" />
+    <result column="RULE_DESC3" property="ruleDesc3" jdbcType="VARCHAR" />
+    <result column="PRIORITY" property="priority" jdbcType="DECIMAL" />
+    <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="CHAR" />
+    <result column="EFFECT_TIME" property="effectTime" jdbcType="TIMESTAMP" />
+    <result column="EXPIRE_TIME" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RULE_ID, CATALOG_ID, RULE_CODE, RULE_NAME, RULE_TYPE, CONTENT1, CONTENT3, CONTENT2, 
+    RULE_DESC1, RULE_DESC2, RULE_DESC3, PRIORITY, NOTES, STATE, EFFECT_TIME, EXPIRE_TIME, 
+    REMARKS
+  </sql>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="java.util.ArrayList" >
+    select
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_RULE
+    <where>
+      RULE_ID in <foreach collection="idList" item="item" index="index"
+                           open="(" separator="," close=")">#{item}</foreach>
+    </where>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_RULE
+    where RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BASE_RULE.RF_RULE
+    where RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="entity.Rule" >
+    insert into BASE_RULE.RF_RULE (RULE_ID, CATALOG_ID, RULE_CODE, 
+      RULE_NAME, RULE_TYPE, CONTENT1, 
+      CONTENT3, CONTENT2, RULE_DESC1, 
+      RULE_DESC2, RULE_DESC3, PRIORITY, 
+      NOTES, STATE, EFFECT_TIME, 
+      EXPIRE_TIME, REMARKS)
+    values (#{ruleId,jdbcType=DECIMAL}, #{catalogId,jdbcType=DECIMAL}, #{ruleCode,jdbcType=VARCHAR}, 
+      #{ruleName,jdbcType=VARCHAR}, #{ruleType,jdbcType=VARCHAR}, #{content1,jdbcType=VARCHAR}, 
+      #{content3,jdbcType=VARCHAR}, #{content2,jdbcType=VARCHAR}, #{ruleDesc1,jdbcType=VARCHAR}, 
+      #{ruleDesc2,jdbcType=VARCHAR}, #{ruleDesc3,jdbcType=VARCHAR}, #{priority,jdbcType=DECIMAL}, 
+      #{notes,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, #{effectTime,jdbcType=TIMESTAMP}, 
+      #{expireTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Rule" >
+    insert into BASE_RULE.RF_RULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ruleId != null" >
+        RULE_ID,
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID,
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE,
+      </if>
+      <if test="ruleName != null" >
+        RULE_NAME,
+      </if>
+      <if test="ruleType != null" >
+        RULE_TYPE,
+      </if>
+      <if test="content1 != null" >
+        CONTENT1,
+      </if>
+      <if test="content3 != null" >
+        CONTENT3,
+      </if>
+      <if test="content2 != null" >
+        CONTENT2,
+      </if>
+      <if test="ruleDesc1 != null" >
+        RULE_DESC1,
+      </if>
+      <if test="ruleDesc2 != null" >
+        RULE_DESC2,
+      </if>
+      <if test="ruleDesc3 != null" >
+        RULE_DESC3,
+      </if>
+      <if test="priority != null" >
+        PRIORITY,
+      </if>
+      <if test="notes != null" >
+        NOTES,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="effectTime != null" >
+        EFFECT_TIME,
+      </if>
+      <if test="expireTime != null" >
+        EXPIRE_TIME,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ruleId != null" >
+        #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="catalogId != null" >
+        #{catalogId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleCode != null" >
+        #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleName != null" >
+        #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleType != null" >
+        #{ruleType,jdbcType=VARCHAR},
+      </if>
+      <if test="content1 != null" >
+        #{content1,jdbcType=VARCHAR},
+      </if>
+      <if test="content3 != null" >
+        #{content3,jdbcType=VARCHAR},
+      </if>
+      <if test="content2 != null" >
+        #{content2,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc1 != null" >
+        #{ruleDesc1,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc2 != null" >
+        #{ruleDesc2,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc3 != null" >
+        #{ruleDesc3,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="effectTime != null" >
+        #{effectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Rule" >
+    update BASE_RULE.RF_RULE
+    <set >
+      <if test="catalogId != null" >
+        CATALOG_ID = #{catalogId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleCode != null" >
+        RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleName != null" >
+        RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleType != null" >
+        RULE_TYPE = #{ruleType,jdbcType=VARCHAR},
+      </if>
+      <if test="content1 != null" >
+        CONTENT1 = #{content1,jdbcType=VARCHAR},
+      </if>
+      <if test="content3 != null" >
+        CONTENT3 = #{content3,jdbcType=VARCHAR},
+      </if>
+      <if test="content2 != null" >
+        CONTENT2 = #{content2,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc1 != null" >
+        RULE_DESC1 = #{ruleDesc1,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc2 != null" >
+        RULE_DESC2 = #{ruleDesc2,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc3 != null" >
+        RULE_DESC3 = #{ruleDesc3,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        PRIORITY = #{priority,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        NOTES = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=CHAR},
+      </if>
+      <if test="effectTime != null" >
+        EFFECT_TIME = #{effectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Rule" >
+    update BASE_RULE.RF_RULE
+    set CATALOG_ID = #{catalogId,jdbcType=DECIMAL},
+      RULE_CODE = #{ruleCode,jdbcType=VARCHAR},
+      RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+      RULE_TYPE = #{ruleType,jdbcType=VARCHAR},
+      CONTENT1 = #{content1,jdbcType=VARCHAR},
+      CONTENT3 = #{content3,jdbcType=VARCHAR},
+      CONTENT2 = #{content2,jdbcType=VARCHAR},
+      RULE_DESC1 = #{ruleDesc1,jdbcType=VARCHAR},
+      RULE_DESC2 = #{ruleDesc2,jdbcType=VARCHAR},
+      RULE_DESC3 = #{ruleDesc3,jdbcType=VARCHAR},
+      PRIORITY = #{priority,jdbcType=DECIMAL},
+      NOTES = #{notes,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=CHAR},
+      EFFECT_TIME = #{effectTime,jdbcType=TIMESTAMP},
+      EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP},
+      REMARKS = #{remarks,jdbcType=VARCHAR}
+    where RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </update>
+</mapper>

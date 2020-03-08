@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.SenceMapper" >
+  <resultMap id="BaseResultMap" type="entity.Sence" >
+    <id column="SENCE_ID" property="senceId" jdbcType="DECIMAL" />
+    <result column="TENANT_ID" property="tenantId" jdbcType="DECIMAL" />
+    <result column="BASE_ID" property="baseId" jdbcType="DECIMAL" />
+    <result column="CATALOG_ID" property="catalogId" jdbcType="DECIMAL" />
+    <result column="SENCE_CODE" property="senceCode" jdbcType="VARCHAR" />
+    <result column="SENCE_NAME" property="senceName" jdbcType="VARCHAR" />
+    <result column="SENCE_DESC" property="senceDesc" jdbcType="VARCHAR" />
+    <result column="PRIORITY" property="priority" jdbcType="DECIMAL" />
+    <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="CHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SENCE_ID, TENANT_ID, BASE_ID, CATALOG_ID, SENCE_CODE, SENCE_NAME, SENCE_DESC, PRIORITY, 
+    NOTES, STATE, REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_SENCE
+    where SENCE_ID = #{senceId,jdbcType=DECIMAL}
+  </select>
+  <select id="getPreSence" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from (select <include refid="Base_Column_List" /> from BASE_RULE.RF_SENCE t where t.sence_id between 300000000 and 300001000 order by t.sence_id desc)
+    where rownum=1
+  </select>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="java.util.ArrayList" >
+    select
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_SENCE
+    <where>
+      SENCE_ID in <foreach collection="idList" item="item" index="index"
+                           open="(" separator="," close=")">#{item}</foreach>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BASE_RULE.RF_SENCE
+    where SENCE_ID = #{senceId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="addSence" parameterType="entity.Sence" >
+    insert into BASE_RULE.RF_SENCE (SENCE_ID, TENANT_ID, BASE_ID, 
+      CATALOG_ID, SENCE_CODE, SENCE_NAME, 
+      SENCE_DESC, PRIORITY, NOTES, 
+      STATE, REMARKS)
+    values (#{senceId,jdbcType=DECIMAL}, #{tenantId,jdbcType=DECIMAL}, #{baseId,jdbcType=DECIMAL}, 
+      #{catalogId,jdbcType=DECIMAL}, #{senceCode,jdbcType=VARCHAR}, #{senceName,jdbcType=VARCHAR}, 
+      #{senceDesc,jdbcType=VARCHAR}, #{priority,jdbcType=DECIMAL}, #{notes,jdbcType=VARCHAR}, 
+      #{state,jdbcType=CHAR}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Sence" >
+    insert into BASE_RULE.RF_SENCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="senceId != null" >
+        SENCE_ID,
+      </if>
+      <if test="tenantId != null" >
+        TENANT_ID,
+      </if>
+      <if test="baseId != null" >
+        BASE_ID,
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID,
+      </if>
+      <if test="senceCode != null" >
+        SENCE_CODE,
+      </if>
+      <if test="senceName != null" >
+        SENCE_NAME,
+      </if>
+      <if test="senceDesc != null" >
+        SENCE_DESC,
+      </if>
+      <if test="priority != null" >
+        PRIORITY,
+      </if>
+      <if test="notes != null" >
+        NOTES,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="senceId != null" >
+        #{senceId,jdbcType=DECIMAL},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=DECIMAL},
+      </if>
+      <if test="baseId != null" >
+        #{baseId,jdbcType=DECIMAL},
+      </if>
+      <if test="catalogId != null" >
+        #{catalogId,jdbcType=DECIMAL},
+      </if>
+      <if test="senceCode != null" >
+        #{senceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="senceName != null" >
+        #{senceName,jdbcType=VARCHAR},
+      </if>
+      <if test="senceDesc != null" >
+        #{senceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Sence" >
+    update BASE_RULE.RF_SENCE
+    <set >
+      <if test="tenantId != null" >
+        TENANT_ID = #{tenantId,jdbcType=DECIMAL},
+      </if>
+      <if test="baseId != null" >
+        BASE_ID = #{baseId,jdbcType=DECIMAL},
+      </if>
+      <if test="catalogId != null" >
+        CATALOG_ID = #{catalogId,jdbcType=DECIMAL},
+      </if>
+      <if test="senceCode != null" >
+        SENCE_CODE = #{senceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="senceName != null" >
+        SENCE_NAME = #{senceName,jdbcType=VARCHAR},
+      </if>
+      <if test="senceDesc != null" >
+        SENCE_DESC = #{senceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        PRIORITY = #{priority,jdbcType=DECIMAL},
+      </if>
+      <if test="notes != null" >
+        NOTES = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SENCE_ID = #{senceId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Sence" >
+    update BASE_RULE.RF_SENCE
+    set TENANT_ID = #{tenantId,jdbcType=DECIMAL},
+      BASE_ID = #{baseId,jdbcType=DECIMAL},
+      CATALOG_ID = #{catalogId,jdbcType=DECIMAL},
+      SENCE_CODE = #{senceCode,jdbcType=VARCHAR},
+      SENCE_NAME = #{senceName,jdbcType=VARCHAR},
+      SENCE_DESC = #{senceDesc,jdbcType=VARCHAR},
+      PRIORITY = #{priority,jdbcType=DECIMAL},
+      NOTES = #{notes,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=CHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR}
+    where SENCE_ID = #{senceId,jdbcType=DECIMAL}
+  </update>
+</mapper>

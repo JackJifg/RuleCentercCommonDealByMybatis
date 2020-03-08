@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.RuleExtMapper" >
+  <resultMap id="BaseResultMap" type="entity.RuleExt" >
+    <id column="EXT_ID" property="extId" jdbcType="DECIMAL" />
+    <result column="RULE_ID" property="ruleId" jdbcType="DECIMAL" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="CODE_DESC" property="codeDesc" jdbcType="VARCHAR" />
+    <result column="VAL" property="val" jdbcType="VARCHAR" />
+    <result column="VAL_DESC" property="valDesc" jdbcType="VARCHAR" />
+    <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="CHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="EXT_A" property="extA" jdbcType="VARCHAR" />
+    <result column="EXT_B" property="extB" jdbcType="VARCHAR" />
+    <result column="EXT_C" property="extC" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    EXT_ID, RULE_ID, CODE, CODE_DESC, VAL, VAL_DESC, NOTES, STATE, REMARKS, EXT_A, EXT_B, 
+    EXT_C
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_RULE_EXT
+    where EXT_ID = #{extId,jdbcType=DECIMAL}
+  </select>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_RULE_EXT
+    <where>
+      EXT_ID in <foreach collection="idList" item="item" index="index"
+                          open="(" separator="," close=")">#{item}</foreach>
+    </where>
+  </select>
+    <select id="getAllBySenceIds" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from BASE_RULE.RF_RULE_EXT
+        <where>
+            VAL = #{val} and
+            RULE_ID in <foreach collection="idList" item="item" index="index"
+                               open="(" separator="," close=")">#{item}</foreach>
+        </where>
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BASE_RULE.RF_RULE_EXT
+    where EXT_ID = #{extId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="entity.RuleExt" >
+    insert into BASE_RULE.RF_RULE_EXT (EXT_ID, RULE_ID, CODE, 
+      CODE_DESC, VAL, VAL_DESC, 
+      NOTES, STATE, REMARKS, 
+      EXT_A, EXT_B, EXT_C)
+    values (#{extId,jdbcType=DECIMAL}, #{ruleId,jdbcType=DECIMAL}, #{code,jdbcType=VARCHAR}, 
+      #{codeDesc,jdbcType=VARCHAR}, #{val,jdbcType=VARCHAR}, #{valDesc,jdbcType=VARCHAR}, 
+      #{notes,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{extA,jdbcType=VARCHAR}, #{extB,jdbcType=VARCHAR}, #{extC,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.RuleExt" >
+    insert into BASE_RULE.RF_RULE_EXT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="extId != null" >
+        EXT_ID,
+      </if>
+      <if test="ruleId != null" >
+        RULE_ID,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="codeDesc != null" >
+        CODE_DESC,
+      </if>
+      <if test="val != null" >
+        VAL,
+      </if>
+      <if test="valDesc != null" >
+        VAL_DESC,
+      </if>
+      <if test="notes != null" >
+        NOTES,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="extA != null" >
+        EXT_A,
+      </if>
+      <if test="extB != null" >
+        EXT_B,
+      </if>
+      <if test="extC != null" >
+        EXT_C,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="extId != null" >
+        #{extId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleId != null" >
+        #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="codeDesc != null" >
+        #{codeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="val != null" >
+        #{val,jdbcType=VARCHAR},
+      </if>
+      <if test="valDesc != null" >
+        #{valDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="extA != null" >
+        #{extA,jdbcType=VARCHAR},
+      </if>
+      <if test="extB != null" >
+        #{extB,jdbcType=VARCHAR},
+      </if>
+      <if test="extC != null" >
+        #{extC,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.RuleExt" >
+    update BASE_RULE.RF_RULE_EXT
+    <set >
+      <if test="ruleId != null" >
+        RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="codeDesc != null" >
+        CODE_DESC = #{codeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="val != null" >
+        VAL = #{val,jdbcType=VARCHAR},
+      </if>
+      <if test="valDesc != null" >
+        VAL_DESC = #{valDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        NOTES = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="extA != null" >
+        EXT_A = #{extA,jdbcType=VARCHAR},
+      </if>
+      <if test="extB != null" >
+        EXT_B = #{extB,jdbcType=VARCHAR},
+      </if>
+      <if test="extC != null" >
+        EXT_C = #{extC,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EXT_ID = #{extId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.RuleExt" >
+    update BASE_RULE.RF_RULE_EXT
+    set RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      CODE = #{code,jdbcType=VARCHAR},
+      CODE_DESC = #{codeDesc,jdbcType=VARCHAR},
+      VAL = #{val,jdbcType=VARCHAR},
+      VAL_DESC = #{valDesc,jdbcType=VARCHAR},
+      NOTES = #{notes,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=CHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      EXT_A = #{extA,jdbcType=VARCHAR},
+      EXT_B = #{extB,jdbcType=VARCHAR},
+      EXT_C = #{extC,jdbcType=VARCHAR}
+    where EXT_ID = #{extId,jdbcType=DECIMAL}
+  </update>
+</mapper>

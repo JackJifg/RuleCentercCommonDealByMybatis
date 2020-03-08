@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.SenceRuleRelMapper" >
+  <resultMap id="BaseResultMap" type="entity.SenceRuleRel" >
+    <id column="REL_ID" property="relId" jdbcType="DECIMAL" />
+    <result column="SENCE_ID" property="senceId" jdbcType="DECIMAL" />
+    <result column="RULE_ID" property="ruleId" jdbcType="DECIMAL" />
+    <result column="EXT_TYPE" property="extType" jdbcType="VARCHAR" />
+    <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="CHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    REL_ID, SENCE_ID, RULE_ID, EXT_TYPE, NOTES, STATE, REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_SENCE_RULE_REL
+    where REL_ID = #{relId,jdbcType=DECIMAL}
+  </select>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_SENCE_RULE_REL
+    where SENCE_ID in
+    <foreach collection="idList" item="id" index="index"
+             open="(" close=")" separator=",">
+    #{id}
+    </foreach>
+    order by REL_ID desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BASE_RULE.RF_SENCE_RULE_REL
+    where REL_ID = #{relId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="addSenceRuleRel" parameterType="entity.SenceRuleRel" >
+    insert into BASE_RULE.RF_SENCE_RULE_REL (REL_ID, SENCE_ID, RULE_ID, 
+      EXT_TYPE, NOTES, STATE, 
+      REMARKS)
+    values (#{relId,jdbcType=DECIMAL}, #{senceId,jdbcType=DECIMAL}, #{ruleId,jdbcType=DECIMAL}, 
+      #{extType,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.SenceRuleRel" >
+    insert into BASE_RULE.RF_SENCE_RULE_REL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="relId != null" >
+        REL_ID,
+      </if>
+      <if test="senceId != null" >
+        SENCE_ID,
+      </if>
+      <if test="ruleId != null" >
+        RULE_ID,
+      </if>
+      <if test="extType != null" >
+        EXT_TYPE,
+      </if>
+      <if test="notes != null" >
+        NOTES,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="relId != null" >
+        #{relId,jdbcType=DECIMAL},
+      </if>
+      <if test="senceId != null" >
+        #{senceId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleId != null" >
+        #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="extType != null" >
+        #{extType,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.SenceRuleRel" >
+    update BASE_RULE.RF_SENCE_RULE_REL
+    <set >
+      <if test="senceId != null" >
+        SENCE_ID = #{senceId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleId != null" >
+        RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="extType != null" >
+        EXT_TYPE = #{extType,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        NOTES = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where REL_ID = #{relId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.SenceRuleRel" >
+    update BASE_RULE.RF_SENCE_RULE_REL
+    set SENCE_ID = #{senceId,jdbcType=DECIMAL},
+      RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      EXT_TYPE = #{extType,jdbcType=VARCHAR},
+      NOTES = #{notes,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=CHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR}
+    where REL_ID = #{relId,jdbcType=DECIMAL}
+  </update>
+</mapper>

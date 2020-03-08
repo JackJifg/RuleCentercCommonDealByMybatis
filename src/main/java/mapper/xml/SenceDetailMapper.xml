@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.SenceDetailMapper" >
+  <resultMap id="BaseResultMap" type="entity.SenceDetail" >
+    <id column="DETAIL_ID" property="detailId" jdbcType="DECIMAL" />
+    <result column="SENCE_ID" property="senceId" jdbcType="DECIMAL" />
+    <result column="FETURE_ID" property="fetureId" jdbcType="DECIMAL" />
+    <result column="OP" property="op" jdbcType="VARCHAR" />
+    <result column="VALUE1" property="value1" jdbcType="VARCHAR" />
+    <result column="VALUE1_DESC" property="value1Desc" jdbcType="VARCHAR" />
+    <result column="VALUE2" property="value2" jdbcType="VARCHAR" />
+    <result column="VALUE2_DESC" property="value2Desc" jdbcType="VARCHAR" />
+    <result column="VALUE3" property="value3" jdbcType="VARCHAR" />
+    <result column="VALUE3_DESC" property="value3Desc" jdbcType="VARCHAR" />
+    <result column="NOTES" property="notes" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="CHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DETAIL_ID, SENCE_ID, FETURE_ID, OP, VALUE1, VALUE1_DESC, VALUE2, VALUE2_DESC, VALUE3, 
+    VALUE3_DESC, NOTES, STATE, REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_SENCE_DETAIL
+    where DETAIL_ID = #{detailId,jdbcType=DECIMAL}
+  </select>
+  <select id="getPreSenceDetail" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_SENCE_DETAIL
+    where sence_id = #{detailId,jdbcType=DECIMAL}
+  </select>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="java.util.ArrayList" >
+    select
+    <include refid="Base_Column_List" />
+    from BASE_RULE.RF_SENCE_DETAIL
+      <where>
+          SENCE_ID in <foreach collection="idList" item="item" index="index"
+                         open="(" separator="," close=")">#{item}</foreach>
+      </where> order by DETAIL_ID desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BASE_RULE.RF_SENCE_DETAIL
+    where DETAIL_ID = #{detailId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="entity.SenceDetail" >
+    insert into BASE_RULE.RF_SENCE_DETAIL (DETAIL_ID, SENCE_ID, FETURE_ID, 
+      OP, VALUE1, VALUE1_DESC, 
+      VALUE2, VALUE2_DESC, VALUE3, 
+      VALUE3_DESC, NOTES, STATE, 
+      REMARKS)
+    values (#{detailId,jdbcType=DECIMAL}, #{senceId,jdbcType=DECIMAL}, #{fetureId,jdbcType=DECIMAL}, 
+      #{op,jdbcType=VARCHAR}, #{value1,jdbcType=VARCHAR}, #{value1Desc,jdbcType=VARCHAR}, 
+      #{value2,jdbcType=VARCHAR}, #{value2Desc,jdbcType=VARCHAR}, #{value3,jdbcType=VARCHAR}, 
+      #{value3Desc,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="addSenceDetail" parameterType="entity.SenceDetail" >
+    insert into BASE_RULE.RF_SENCE_DETAIL (DETAIL_ID, SENCE_ID, FETURE_ID,
+                                           OP, VALUE1, VALUE1_DESC,
+                                           VALUE2, VALUE2_DESC, VALUE3,
+                                           VALUE3_DESC, NOTES, STATE,
+                                           REMARKS)
+    values (#{detailId,jdbcType=DECIMAL}, #{senceId,jdbcType=DECIMAL}, #{fetureId,jdbcType=DECIMAL},
+            #{op,jdbcType=VARCHAR}, #{value1,jdbcType=VARCHAR}, #{value1Desc,jdbcType=VARCHAR},
+            #{value2,jdbcType=VARCHAR}, #{value2Desc,jdbcType=VARCHAR}, #{value3,jdbcType=VARCHAR},
+            #{value3Desc,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{state,jdbcType=CHAR},
+            #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.SenceDetail" >
+    insert into BASE_RULE.RF_SENCE_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        DETAIL_ID,
+      </if>
+      <if test="senceId != null" >
+        SENCE_ID,
+      </if>
+      <if test="fetureId != null" >
+        FETURE_ID,
+      </if>
+      <if test="op != null" >
+        OP,
+      </if>
+      <if test="value1 != null" >
+        VALUE1,
+      </if>
+      <if test="value1Desc != null" >
+        VALUE1_DESC,
+      </if>
+      <if test="value2 != null" >
+        VALUE2,
+      </if>
+      <if test="value2Desc != null" >
+        VALUE2_DESC,
+      </if>
+      <if test="value3 != null" >
+        VALUE3,
+      </if>
+      <if test="value3Desc != null" >
+        VALUE3_DESC,
+      </if>
+      <if test="notes != null" >
+        NOTES,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        #{detailId,jdbcType=DECIMAL},
+      </if>
+      <if test="senceId != null" >
+        #{senceId,jdbcType=DECIMAL},
+      </if>
+      <if test="fetureId != null" >
+        #{fetureId,jdbcType=DECIMAL},
+      </if>
+      <if test="op != null" >
+        #{op,jdbcType=VARCHAR},
+      </if>
+      <if test="value1 != null" >
+        #{value1,jdbcType=VARCHAR},
+      </if>
+      <if test="value1Desc != null" >
+        #{value1Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="value2 != null" >
+        #{value2,jdbcType=VARCHAR},
+      </if>
+      <if test="value2Desc != null" >
+        #{value2Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="value3 != null" >
+        #{value3,jdbcType=VARCHAR},
+      </if>
+      <if test="value3Desc != null" >
+        #{value3Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.SenceDetail" >
+    update BASE_RULE.RF_SENCE_DETAIL
+    <set >
+      <if test="senceId != null" >
+        SENCE_ID = #{senceId,jdbcType=DECIMAL},
+      </if>
+      <if test="fetureId != null" >
+        FETURE_ID = #{fetureId,jdbcType=DECIMAL},
+      </if>
+      <if test="op != null" >
+        OP = #{op,jdbcType=VARCHAR},
+      </if>
+      <if test="value1 != null" >
+        VALUE1 = #{value1,jdbcType=VARCHAR},
+      </if>
+      <if test="value1Desc != null" >
+        VALUE1_DESC = #{value1Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="value2 != null" >
+        VALUE2 = #{value2,jdbcType=VARCHAR},
+      </if>
+      <if test="value2Desc != null" >
+        VALUE2_DESC = #{value2Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="value3 != null" >
+        VALUE3 = #{value3,jdbcType=VARCHAR},
+      </if>
+      <if test="value3Desc != null" >
+        VALUE3_DESC = #{value3Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        NOTES = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DETAIL_ID = #{detailId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.SenceDetail" >
+    update BASE_RULE.RF_SENCE_DETAIL
+    set SENCE_ID = #{senceId,jdbcType=DECIMAL},
+      FETURE_ID = #{fetureId,jdbcType=DECIMAL},
+      OP = #{op,jdbcType=VARCHAR},
+      VALUE1 = #{value1,jdbcType=VARCHAR},
+      VALUE1_DESC = #{value1Desc,jdbcType=VARCHAR},
+      VALUE2 = #{value2,jdbcType=VARCHAR},
+      VALUE2_DESC = #{value2Desc,jdbcType=VARCHAR},
+      VALUE3 = #{value3,jdbcType=VARCHAR},
+      VALUE3_DESC = #{value3Desc,jdbcType=VARCHAR},
+      NOTES = #{notes,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=CHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR}
+    where DETAIL_ID = #{detailId,jdbcType=DECIMAL}
+  </update>
+</mapper>

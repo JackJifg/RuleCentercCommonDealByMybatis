@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties>
+        <property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="ggdb_url" value="jdbc:oracle:thin:@172.30.243.100:1521:ggdb" />
+        <property name="liantiao_url" value="jdbc:oracle:thin:@10.7.5.75:1521:liantiaodb" />
+    </properties>
+    <!-- 为JAVA Bean起类别名 -->
+    <typeAliases >
+        <!-- 别名方式2，自动扫描，将JAVA类的类名作为类的类别名 -->
+        <package name="entity"/>
+    </typeAliases>
+    <!-- 配置mybatis运行环境 -->
+    <environments default="ggdb-base_rule">
+        <environment id="ggdb-base_rule">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}" />
+                <!--100库-->
+<!--
+                <property name="url" value="${ggdb_url}" />
+-->
+                <!--75库-->
+                <property name="url" value="${liantiao_url}" />
+                <property name="username" value="base_rule" />
+                <property name="password" value="pl,12345" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/xml/SenceMapper.xml"/>
+        <mapper resource="mapper/xml/SenceDetailMapper.xml"/>
+        <mapper resource="mapper/xml/SenceRuleRelMapper.xml"/>
+        <mapper resource="mapper/xml/RuleMapper.xml"/>
+        <mapper resource="mapper/xml/BsExceDefineMapper.xml"/>
+        <mapper resource="mapper/xml/RuleExtMapper.xml"/>
+    </mappers>
+</configuration>
